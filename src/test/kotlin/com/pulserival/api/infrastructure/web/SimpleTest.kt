@@ -1,0 +1,12 @@
+package com.pulserival.api.infrastructure.web
+
+import org.junit.jupiter.api.Test
+import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc
+
+@SpringBootTest
+@AutoConfigureMockMvc
+class SimpleTest {
+    @Test
+    fun contextLoads() {}
+}
