@@ -1,11 +1,11 @@
-package com.pulserival.api.application.service
+package com.pulserival.activity.service
 
-import com.pulserival.api.domain.exception.InvalidActivityValueException
-import com.pulserival.api.domain.exception.UserNotFoundException
-import com.pulserival.api.domain.model.ActivityLog
-import com.pulserival.api.domain.model.ActivityType
-import com.pulserival.api.infrastructure.persistence.ActivityLogRepository
-import com.pulserival.api.infrastructure.persistence.UserRepository
+import com.pulserival.common.exception.InvalidActivityValueException
+import com.pulserival.common.exception.UserNotFoundException
+import com.pulserival.activity.entity.ActivityLog
+import com.pulserival.activity.entity.ActivityType
+import com.pulserival.activity.repository.ActivityLogRepository
+import com.pulserival.identity.repository.UserRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.Instant

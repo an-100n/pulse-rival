@@ -1,11 +1,11 @@
-package com.pulserival.api
+package com.pulserival
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class PulseRivalApiApplication
+class PulseRivalApplication
 
 fun main(args: Array<String>) {
-	runApplication<PulseRivalApiApplication>(*args)
+	runApplication<PulseRivalApplication>(*args)
 }

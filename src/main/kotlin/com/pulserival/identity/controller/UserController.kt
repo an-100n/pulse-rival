@@ -1,8 +1,8 @@
-package com.pulserival.api.infrastructure.web
+package com.pulserival.identity.controller
 
-import com.pulserival.api.application.service.RegisterUserCommand
-import com.pulserival.api.application.service.UserRegistrationService
-import com.pulserival.api.application.service.UserResponse
+import com.pulserival.identity.dto.RegisterUserCommand
+import com.pulserival.identity.dto.UserResponse
+import com.pulserival.identity.service.UserRegistrationService
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 import java.util.UUID

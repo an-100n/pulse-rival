@@ -1,18 +1,10 @@
-package com.pulserival.api.domain.model
+package com.pulserival.identity.entity
 
 import jakarta.persistence.*
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.UpdateTimestamp
 import java.time.Instant
 import java.util.UUID
-
-@JvmInline
-value class UserId(val value: UUID) {
-    companion object {
-        fun random() = UserId(UUID.randomUUID())
-        fun fromString(s: String) = UserId(UUID.fromString(s))
-    }
-}
 
 @Entity
 @Table(name = "users")
@@ -37,10 +29,4 @@ data class User(
     @UpdateTimestamp
     @Column(name = "updated_at", nullable = false)
     val updatedAt: Instant = Instant.now()
-) {
-    // Domain Logic inside the Entity (Rich Model)
-    fun changeTimezone(newZone: String): User {
-        // In a real app, we would validate the ZoneId string here
-        return this.copy(timezone = newZone)
-    }
-}
+)

@@ -1,4 +1,4 @@
-package com.pulserival.api.domain.exception
+package com.pulserival.common.exception
 
 sealed class DomainException(message: String) : RuntimeException(message)
 

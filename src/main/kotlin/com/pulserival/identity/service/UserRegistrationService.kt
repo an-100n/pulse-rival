@@ -1,27 +1,16 @@
-package com.pulserival.api.application.service
+package com.pulserival.identity.service
 
-import com.pulserival.api.domain.exception.EmailAlreadyInUseException
-import com.pulserival.api.domain.exception.UsernameAlreadyTakenException
-import com.pulserival.api.domain.exception.UserNotFoundException
-import com.pulserival.api.domain.model.User
-import com.pulserival.api.infrastructure.persistence.UserRepository
+import com.pulserival.common.exception.EmailAlreadyInUseException
+import com.pulserival.common.exception.UsernameAlreadyTakenException
+import com.pulserival.common.exception.UserNotFoundException
+import com.pulserival.identity.dto.RegisterUserCommand
+import com.pulserival.identity.dto.UserResponse
+import com.pulserival.identity.entity.User
+import com.pulserival.identity.repository.UserRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.UUID
 
-// DTOs (Data Transfer Objects)
-data class RegisterUserCommand(
-    val username: String,
-    val email: String,
-    val timezone: String?
-)
-
-data class UserResponse(
-    val id: String,
-    val username: String,
-    val email: String,
-    val timezone: String
-)
 
 @Service
 class UserRegistrationService(

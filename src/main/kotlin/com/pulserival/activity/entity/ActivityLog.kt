@@ -1,4 +1,4 @@
-package com.pulserival.api.domain.model
+package com.pulserival.activity.entity
 
 import jakarta.persistence.*
 import java.time.Instant

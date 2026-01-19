@@ -1,6 +1,6 @@
-package com.pulserival.api.infrastructure.persistence
+package com.pulserival.identity.repository
 
-import com.pulserival.api.domain.model.User
+import com.pulserival.identity.entity.User
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 import java.util.UUID

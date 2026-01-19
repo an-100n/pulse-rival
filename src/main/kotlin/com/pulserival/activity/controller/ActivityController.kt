@@ -1,8 +1,8 @@
-package com.pulserival.api.infrastructure.web
+package com.pulserival.activity.controller
 
-import com.pulserival.api.application.service.ActivityLogResponse
-import com.pulserival.api.application.service.ActivityLogService
-import com.pulserival.api.application.service.LogActivityCommand
+import com.pulserival.activity.service.ActivityLogResponse
+import com.pulserival.activity.service.ActivityLogService
+import com.pulserival.activity.service.LogActivityCommand
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 import java.util.UUID

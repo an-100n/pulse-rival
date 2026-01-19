@@ -1,4 +1,4 @@
-package com.pulserival.api.infrastructure.configuration
+package com.pulserival.identity.configuration
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

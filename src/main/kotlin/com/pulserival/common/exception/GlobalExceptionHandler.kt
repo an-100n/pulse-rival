@@ -1,6 +1,5 @@
-package com.pulserival.api.infrastructure.web
+package com.pulserival.common.exception
 
-import com.pulserival.api.domain.exception.*
 import org.springframework.http.HttpStatus
 import org.springframework.http.ProblemDetail
 import org.springframework.web.bind.annotation.ExceptionHandler

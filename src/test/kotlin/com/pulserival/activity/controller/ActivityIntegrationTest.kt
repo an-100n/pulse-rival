@@ -1,9 +1,9 @@
-package com.pulserival.api.infrastructure.web
+package com.pulserival.activity.controller
 
 import tools.jackson.databind.ObjectMapper
-import com.pulserival.api.application.service.LogActivityCommand
-import com.pulserival.api.application.service.RegisterUserCommand
-import com.pulserival.api.domain.model.ActivityType
+import com.pulserival.activity.service.LogActivityCommand
+import com.pulserival.identity.service.RegisterUserCommand
+import com.pulserival.activity.entity.ActivityType
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
