@@ -5,8 +5,8 @@ import com.pulserival.common.exception.UsernameAlreadyTakenException
 import com.pulserival.common.exception.UserNotFoundException
 import com.pulserival.identity.dto.RegisterUserCommand
 import com.pulserival.identity.dto.UserResponse
-import com.pulserival.identity.entity.User
 import com.pulserival.identity.repository.UserRepository
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.UUID
@@ -14,7 +14,8 @@ import java.util.UUID
 
 @Service
 class UserRegistrationService(
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val passwordEncoder: PasswordEncoder
 ) {
 
     @Transactional
@@ -22,13 +23,17 @@ class UserRegistrationService(
         if (userRepository.existsByEmail(command.email)) {
             throw EmailAlreadyInUseException(command.email)
         }
-        if (userRepository.existsByUsername(command.username)) {
+        if (userRepository.existsByDbUsername(command.username)) {
             throw UsernameAlreadyTakenException(command.username)
         }
 
-        val newUser = User(
-            username = command.username,
+        val rawPassword = command.password
+        val encodedPassword: String = passwordEncoder.encode(rawPassword)!!
+
+        val newUser = com.pulserival.identity.entity.User(
+            dbUsername = command.username,
             email = command.email,
+            dbPassword = encodedPassword,
             timezone = command.timezone ?: "UTC"
         )
 
@@ -36,7 +41,7 @@ class UserRegistrationService(
 
         return UserResponse(
             id = savedUser.id.toString(),
-            username = savedUser.username,
+            username = savedUser.dbUsername,
             email = savedUser.email,
             timezone = savedUser.timezone
         )
@@ -49,7 +54,7 @@ class UserRegistrationService(
         
         return UserResponse(
             id = user.id.toString(),
-            username = user.username,
+            username = user.dbUsername,
             email = user.email,
             timezone = user.timezone
         )

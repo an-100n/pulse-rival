@@ -1,29 +1,15 @@
 package com.pulserival.activity.service
 
+import com.pulserival.activity.dto.ActivityLogResponse
+import com.pulserival.activity.dto.LogActivityCommand
 import com.pulserival.common.exception.InvalidActivityValueException
 import com.pulserival.common.exception.UserNotFoundException
 import com.pulserival.activity.entity.ActivityLog
-import com.pulserival.activity.entity.ActivityType
 import com.pulserival.activity.repository.ActivityLogRepository
 import com.pulserival.identity.repository.UserRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import java.time.Instant
 import java.util.UUID
-
-data class LogActivityCommand(
-    val userId: UUID,
-    val type: ActivityType,
-    val value: Int,
-    val occurredAt: Instant = Instant.now()
-)
-
-data class ActivityLogResponse(
-    val id: UUID,
-    val type: ActivityType,
-    val value: Int,
-    val occurredAt: Instant
-)
 
 @Service
 class ActivityLogService(

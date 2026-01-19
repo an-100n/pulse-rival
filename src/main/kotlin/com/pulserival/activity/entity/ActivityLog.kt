@@ -4,21 +4,11 @@ import jakarta.persistence.*
 import java.time.Instant
 import java.util.UUID
 
-enum class ActivityType {
-    STEPS,
-    CALORIES,
-    DISTANCE_METERS,
-    HEART_RATE_AVG
-}
-
 @Entity
 @Table(name = "activity_logs")
-data class ActivityLog(
-    @Id
-    val id: UUID = UUID.randomUUID(),
-
+class ActivityLog(
     @Column(name = "user_id", nullable = false)
-    val userId: UUID, // We store the ID, not the Object, to keep domains decoupled (DDD preference)
+    val userId: UUID,
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -29,4 +19,24 @@ data class ActivityLog(
 
     @Column(name = "occurred_at", nullable = false)
     val occurredAt: Instant
-)
+) {
+    @Id
+    val id: UUID = UUID.randomUUID()
+
+    // equals() based ONLY on ID
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is ActivityLog) return false
+        return id == other.id
+    }
+
+    // hashCode() based ONLY on ID
+    override fun hashCode(): Int {
+        return id.hashCode()
+    }
+
+    // toString() that is safe (doesn't dump everything)
+    override fun toString(): String {
+        return "ActivityLog(id=$id, type=$type, value=$value)"
+    }
+}
