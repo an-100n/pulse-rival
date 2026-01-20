@@ -1,6 +1,8 @@
 package com.pulserival.activity.entity
 
 import jakarta.persistence.*
+import org.hibernate.annotations.JdbcTypeCode
+import org.hibernate.type.SqlTypes
 import java.time.Instant
 import java.util.UUID
 
@@ -18,7 +20,11 @@ class ActivityLog(
     val value: Int,
 
     @Column(name = "occurred_at", nullable = false)
-    val occurredAt: Instant
+    val occurredAt: Instant,
+
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(name = "raw_data", columnDefinition = "jsonb")
+    val rawData: Map<String, Any> = emptyMap()
 ) {
     @Id
     val id: UUID = UUID.randomUUID()

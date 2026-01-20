@@ -36,7 +36,7 @@ class ActivityIntegrationTest {
             status { isOk() }
         }.andReturn().response.contentAsString
 
-        return objectMapper.readTree(responseJson).get("token").asText()
+        return objectMapper.readTree(responseJson).get("token").asString()
     }
 
     @Test
@@ -57,16 +57,18 @@ class ActivityIntegrationTest {
             status { isCreated() }
         }.andReturn().response.contentAsString
 
-        val userId = objectMapper.readTree(userResponseJson).get("id").asText()
+        val userId = objectMapper.readTree(userResponseJson).get("id").asString()
         
         // 2. Login to get token
         val token = getAuthToken(username)
 
-        // 3. Log activity with Token
+        // 3. Log activity with Token and JSONB data
+        val rawData = mapOf("device" to "Apple Watch", "heartRate" to 120)
         val logCommand = LogActivityCommand(
             userId = UUID.fromString(userId),
             type = ActivityType.STEPS,
-            value = 1000
+            value = 1000,
+            rawData = rawData
         )
 
         mockMvc.post("/api/v1/activities") {
@@ -77,6 +79,8 @@ class ActivityIntegrationTest {
             status { isCreated() }
             jsonPath("$.type") { value("STEPS") }
             jsonPath("$.value") { value(1000) }
+            jsonPath("$.rawData.device") { value("Apple Watch") }
+            jsonPath("$.rawData.heartRate") { value(120) }
         }
     }
 

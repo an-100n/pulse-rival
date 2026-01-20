@@ -8,5 +8,6 @@ data class LogActivityCommand(
     val userId: UUID,
     val type: ActivityType,
     val value: Int,
-    val occurredAt: Instant = Instant.now()
+    val occurredAt: Instant = Instant.now(),
+    val rawData: Map<String, Any> = emptyMap()
 )

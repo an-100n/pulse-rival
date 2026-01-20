@@ -32,7 +32,8 @@ class ActivityLogService(
             userId = command.userId,
             type = command.type,
             value = command.value,
-            occurredAt = command.occurredAt
+            occurredAt = command.occurredAt,
+            rawData = command.rawData
         )
 
         val saved = activityLogRepository.save(log)
@@ -41,13 +42,14 @@ class ActivityLogService(
             id = saved.id,
             type = saved.type,
             value = saved.value,
-            occurredAt = saved.occurredAt
+            occurredAt = saved.occurredAt,
+            rawData = saved.rawData
         )
     }
 
     fun getUserActivities(userId: UUID): List<ActivityLogResponse> {
         return activityLogRepository.findAllByUserId(userId).map {
-            ActivityLogResponse(it.id, it.type, it.value, it.occurredAt)
+            ActivityLogResponse(it.id, it.type, it.value, it.occurredAt, it.rawData)
         }
     }
 }

@@ -8,5 +8,6 @@ data class ActivityLogResponse(
     val id: UUID,
     val type: ActivityType,
     val value: Int,
-    val occurredAt: Instant
+    val occurredAt: Instant,
+    val rawData: Map<String, Any>
 )
