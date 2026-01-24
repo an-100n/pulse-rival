@@ -6,6 +6,7 @@ import com.pulserival.common.exception.InvalidActivityValueException
 import com.pulserival.common.exception.UserNotFoundException
 import com.pulserival.activity.entity.ActivityLog
 import com.pulserival.activity.repository.ActivityLogRepository
+import com.pulserival.gamification.service.LeaderboardService
 import com.pulserival.identity.repository.UserRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -14,7 +15,8 @@ import java.util.UUID
 @Service
 class ActivityLogService(
     private val activityLogRepository: ActivityLogRepository,
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val leaderboardService: LeaderboardService
 ) {
 
     @Transactional
@@ -37,6 +39,11 @@ class ActivityLogService(
         )
 
         val saved = activityLogRepository.save(log)
+
+        // Sync with Leaderboard (Fire-and-forget logic for now)
+        // In a distributed system, this should be handled via Domain Events (e.g. ActivityLoggedEvent)
+        // to ensure eventual consistency if Redis is down.
+        leaderboardService.updateScore(command.userId, command.value.toDouble())
 
         return ActivityLogResponse(
             id = saved.id,
