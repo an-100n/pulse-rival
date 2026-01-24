@@ -1,0 +1,204 @@
+{
+  "main": {
+    "id": "bc96bf16b6cdf114",
+    "type": "split",
+    "children": [
+      {
+        "id": "a7e853e6718cb3c4",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "bd217d49d5a17aeb",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "GEMINI.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "GEMINI"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "d9e517eb4141297d",
+    "type": "split",
+    "children": [
+      {
+        "id": "9bff63aa3adfb49b",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "6046de79ae932696",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "419351e2ecb8b50c",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "8758f23898b5a1dc",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "f7414cc7b11f1227",
+    "type": "split",
+    "children": [
+      {
+        "id": "e71af4d13df6823b",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "26e869ccb604e063",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "GEMINI.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for GEMINI"
+            }
+          },
+          {
+            "id": "b056d675282ffaf0",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "GEMINI.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from GEMINI"
+            }
+          },
+          {
+            "id": "d254604cd4cb7d98",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "3884887823945396",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "e250251dde2d5965",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "GEMINI.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of GEMINI"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "6046de79ae932696",
+  "lastOpenFiles": [
+    "src/main/kotlin/com/pulserival/gamification/controller/LeaderboardController.kt",
+    "src/main/kotlin/com/pulserival/gamification/controller",
+    "src/main/kotlin/com/pulserival/gamification/service/LeaderboardService.kt~",
+    "src/main/kotlin/com/pulserival/gamification/service/LeaderboardService.kt",
+    "src/main/kotlin/com/pulserival/gamification/service",
+    "src/main/kotlin/com/pulserival/gamification/dto/LeaderboardEntry.kt",
+    "src/main/kotlin/com/pulserival/gamification/dto",
+    "src/main/kotlin/com/pulserival/gamification/configuration/RedisConfig.kt~",
+    "src/main/kotlin/com/pulserival/gamification/configuration/RedisConfig.kt",
+    "src/main/kotlin/com/pulserival/gamification/configuration",
+    "src/main/kotlin/com/pulserival/gamification",
+    "HELP.md",
+    "README.md",
+    "SESSION_LOG.md",
+    "GEMINI.md"
+  ]
+}

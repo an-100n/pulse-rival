@@ -16,8 +16,8 @@ build/
 bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
-GEMINI.md
-SESSION_LOG.md
+#GEMINI.md
+#SESSION_LOG.md
 
 ### IntelliJ IDEA ###
 .idea
