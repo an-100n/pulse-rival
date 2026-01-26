@@ -40,6 +40,7 @@ class SecurityConfig(
                 auth
                     .requestMatchers(HttpMethod.POST, "/api/v1/users").permitAll()
                     .requestMatchers("/api/v1/auth/**").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/api/v1/leaderboards/global").permitAll()
                     .anyRequest().authenticated()
             }
             .userDetailsService(userDetailsService)

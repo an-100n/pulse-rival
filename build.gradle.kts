@@ -37,7 +37,11 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-data-jpa-test")
 	testImplementation("org.springframework.boot:spring-boot-starter-security-test")
 	testImplementation("org.springframework.boot:spring-boot-starter-validation-test")
+	testImplementation(platform("org.testcontainers:testcontainers-bom:1.19.7"))
 	testImplementation("org.springframework.boot:spring-boot-starter-webmvc-test")
+	testImplementation("org.springframework.boot:spring-boot-testcontainers")
+	testImplementation("org.testcontainers:junit-jupiter")
+	testImplementation("org.testcontainers:postgresql")
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
@@ -57,4 +61,23 @@ allOpen {
 tasks.withType<Test> {
 	useJUnitPlatform()
 	jvmArgs("-XX:+EnableDynamicAgentLoading")
+
+	// Intelligent Podman Detection for Testcontainers
+	val podmanSocket = try {
+		val process = ProcessBuilder("podman", "info", "--format", "{{.Host.RemoteSocket.Path}}")
+			.redirectErrorStream(true)
+			.start()
+		val output = process.inputStream.bufferedReader().readText().trim()
+		if (process.waitFor() == 0 && output.isNotEmpty() && file(output).exists()) {
+			"unix://$output"
+		} else null
+	} catch (e: Exception) {
+		null
+	}
+
+	if (podmanSocket != null && System.getenv("DOCKER_HOST") == null) {
+		println("🐳 Configured Testcontainers to use Podman: $podmanSocket")
+		environment("DOCKER_HOST", podmanSocket)
+		environment("TESTCONTAINERS_RYUK_DISABLED", "true")
+	}
 }

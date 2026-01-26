@@ -1,25 +1,27 @@
 # Session Log
 
 ## Project Status
-*   **Phase:** Phase 4 - High Performance (Redis & Gamification)
-*   **Current Goal:** Implement real-time Global Leaderboards using Redis Sorted Sets.
-*   **Last Update:** January 24, 2026
+*   **Phase:** Phase 5 - Reliability & Testing (Completed)
+*   **Current Goal:** Prepare for Phase 6 (Event-Driven Architecture).
+*   **Last Update:** January 26, 2026
 
 ## Recent Achievements
-*   **Infrastructure:** Configured `RedisTemplate` with String serialization in `RedisConfig.kt`.
-*   **Service Layer:** Implemented `LeaderboardService` to handle `ZINCRBY` (update score) and `ZREVRANGE` (get top users).
-*   **Integration:**
-    *   Updated `ActivityLogService` to synchronously update the leaderboard when an activity is saved.
-    *   Updated `DataSeeder` to backfill Redis with scores for seeded data.
-*   **API:** Created `LeaderboardController` exposing `GET /api/v1/leaderboards/global`.
-*   **Domain Logic:** Decision made to use `String` for User IDs in the Redis layer (pass-through) rather than parsing UUIDs, for performance and robustness.
+*   **Security:** Made Global Leaderboard (`GET /api/v1/leaderboards/global`) public (no JWT required) to drive engagement.
+*   **Testing:** Implemented `LeaderboardIntegrationTest` using **Testcontainers**.
+    *   Verified `Redis` interactions (update & retrieve) in an isolated environment.
+    *   Switched to `GenericContainer` to resolve dependency issues.
+*   **DevOps (Major Win):** Configured `build.gradle.kts` to **automatically detect Podman** environments.
+    *   Added logic to find the rootless Podman socket (`/run/user/$UID/podman/podman.sock`).
+    *   Automatically configures `Testcontainers` to use this socket, removing the need for manual setup or external scripts.
+    *   Project is now "Clone & Run" ready for both Docker and Podman users.
 
 ## Key Decisions & Lessons
-*   **Redis Serialization:** Used `StringRedisSerializer` to ensure keys are human-readable in `redis-cli`, facilitating easier debugging.
-*   **UUID vs String in DTO:** Opted for `String` in `LeaderboardEntry` to avoid unnecessary parsing/serialization overhead in the high-performance read path.
-*   **Sync vs Async:** Currently using synchronous updates to Redis for simplicity. Noted that in a production microservice, this should be eventually consistent via Domain Events to decouple availability.
+*   **Gradle DSL:** Used `file(output)` instead of `java.io.File` to avoid shadowing issues in the build script.
+*   **Public API:** Leaderboards are better as public endpoints for "social proof".
+*   **Rootless Containers:** Configured the build to respect modern, secure rootless container setups by default.
 
 ## Next Steps
-1.  **Verification:** Run the application and verify the endpoint manually via `posting`.
-2.  **Reliability (Phase 5):** Write an Integration Test using Testcontainers (Redis) to ensure the leaderboard logic works in a clean, reproducible environment.
-3.  **Refactoring:** Consider moving the Redis update logic to a Spring Event Listener (`@EventListener`) to decouple `ActivityLogService` from `LeaderboardService`.
+1.  **Walkthrough:** Start the next session with a comprehensive **Code Walkthrough**. Explain the current flow from `ActivityController` -> `Service` -> `Redis` -> `LeaderboardController` to solidify understanding before refactoring.
+2.  **Refactoring (Phase 6):** Decouple `ActivityLogService` from `LeaderboardService` using Spring Events (`ApplicationEventPublisher`).
+    *   Create `ActivityLoggedEvent`.
+    *   Create `LeaderboardEventListener`.
