@@ -2,12 +2,13 @@ package com.pulserival.activity.service
 
 import com.pulserival.activity.dto.ActivityLogResponse
 import com.pulserival.activity.dto.LogActivityCommand
+import com.pulserival.activity.event.ActivityLoggedEvent
 import com.pulserival.common.exception.InvalidActivityValueException
 import com.pulserival.common.exception.UserNotFoundException
 import com.pulserival.activity.entity.ActivityLog
 import com.pulserival.activity.repository.ActivityLogRepository
-import com.pulserival.gamification.service.LeaderboardService
 import com.pulserival.identity.repository.UserRepository
+import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.UUID
@@ -16,7 +17,7 @@ import java.util.UUID
 class ActivityLogService(
     private val activityLogRepository: ActivityLogRepository,
     private val userRepository: UserRepository,
-    private val leaderboardService: LeaderboardService
+    private val eventPublisher: ApplicationEventPublisher
 ) {
 
     @Transactional
@@ -40,10 +41,15 @@ class ActivityLogService(
 
         val saved = activityLogRepository.save(log)
 
-        // Sync with Leaderboard (Fire-and-forget logic for now)
-        // In a distributed system, this should be handled via Domain Events (e.g. ActivityLoggedEvent)
-        // to ensure eventual consistency if Redis is down.
-        leaderboardService.updateScore(command.userId, command.value.toDouble())
+        // Publish Event: "Hey, an activity happened!"
+        // Downstream listeners (Gamification, Analytics, etc.) will handle the rest.
+        eventPublisher.publishEvent(
+            ActivityLoggedEvent(
+                userId = saved.userId,
+                type = saved.type,
+                value = saved.value
+            )
+        )
 
         return ActivityLogResponse(
             id = saved.id,

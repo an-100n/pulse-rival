@@ -22,7 +22,7 @@ class LeaderboardIntegrationTest {
 
     companion object {
         @Container
-        val redis = RedisContainer("redis:7.2-alpine").withExposedPorts(6379)
+        val redis: RedisContainer = RedisContainer("redis:7.2-alpine").withExposedPorts(6379)
 
         @JvmStatic
         @DynamicPropertySource
