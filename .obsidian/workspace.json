@@ -11,14 +11,10 @@
             "id": "bd217d49d5a17aeb",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "THEORY.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "THEORY"
+              "title": "New tab"
             }
           }
         ]
@@ -78,8 +74,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "right": {
     "id": "f7414cc7b11f1227",
@@ -186,9 +181,13 @@
   },
   "active": "bd217d49d5a17aeb",
   "lastOpenFiles": [
+    "THEORY.md",
+    "context-pulse-rival/THEORY.md",
+    "context-pulse-rival/SESSION_LOG.md",
+    "context-pulse-rival/GEMINI.md",
+    "context-pulse-rival",
     "SESSION_LOG.md",
     "ASYNC.md",
-    "THEORY.md",
     "build/kotlin/compileTestKotlin/cacheable/dirty-sources.txt",
     "build/classes/kotlin/test/META-INF/api_test.kotlin_module",
     "build/classes/kotlin/test/com/pulserival/gamification/RetryIntegrationTest$TestConfig.class",
@@ -198,7 +197,6 @@
     "build/classes/kotlin/main/com/pulserival/gamification/service/LeaderboardService.class",
     "build.gradle.kts~",
     "build/test-results/test/TEST-com.pulserival.gamification.RetryIntegrationTest.xml",
-    "build/classes/kotlin/test/com/pulserival/gamification/LeaderboardIntegrationTest$Companion.class",
     "GEMINI.md",
     "HELP.md",
     "README.md"
