@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "ASYNC.md",
+                "file": "THEORY.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "ASYNC"
+              "title": "THEORY"
             }
           }
         ]
@@ -78,7 +78,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "f7414cc7b11f1227",
@@ -187,16 +188,17 @@
   "lastOpenFiles": [
     "SESSION_LOG.md",
     "ASYNC.md",
+    "THEORY.md",
     "build/kotlin/compileTestKotlin/cacheable/dirty-sources.txt",
     "build/classes/kotlin/test/META-INF/api_test.kotlin_module",
-    "build/classes/kotlin/test/com/pulserival/gamification/EventWiringTest$Companion.class",
-    "build/classes/kotlin/test/com/pulserival/gamification/EventWiringTest$RedisContainer.class",
-    "build/classes/kotlin/test/com/pulserival/gamification/EventWiringTest.class",
+    "build/classes/kotlin/test/com/pulserival/gamification/RetryIntegrationTest$TestConfig.class",
+    "build/classes/kotlin/test/com/pulserival/gamification/RetryIntegrationTest.class",
     "build/kotlin/compileKotlin/cacheable/dirty-sources.txt",
     "build/classes/kotlin/main/META-INF/api.kotlin_module",
-    "build/classes/kotlin/main/com/pulserival/gamification/listener/LeaderboardEventListener.class",
-    "build/classes/kotlin/main/com/pulserival/PulseRivalApplicationKt.class",
-    "build/classes/kotlin/main/com/pulserival/PulseRivalApplication.class",
+    "build/classes/kotlin/main/com/pulserival/gamification/service/LeaderboardService.class",
+    "build.gradle.kts~",
+    "build/test-results/test/TEST-com.pulserival.gamification.RetryIntegrationTest.xml",
+    "build/classes/kotlin/test/com/pulserival/gamification/LeaderboardIntegrationTest$Companion.class",
     "GEMINI.md",
     "HELP.md",
     "README.md"
