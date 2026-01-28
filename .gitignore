@@ -16,9 +16,7 @@ build/
 bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
-GEMINI.md
-SESSION_LOG.md
-THEORY.md
+context-pulse-rival/
 ASYNC.md
 
 ### IntelliJ IDEA ###
