@@ -21,6 +21,8 @@ import org.testcontainers.junit.jupiter.Container
 import org.testcontainers.junit.jupiter.Testcontainers
 import org.testcontainers.utility.DockerImageName
 import java.util.UUID
+import org.awaitility.Awaitility.await
+import java.util.concurrent.TimeUnit
 
 @SpringBootTest
 @Testcontainers
@@ -81,17 +83,17 @@ class EventWiringTest {
         activityLogService.logActivity(command)
 
         // Then
-        // Since the listener is synchronous (default), we can check immediately.
-        val topUsers = leaderboardService.getGlobalLeaderboard(20) // Fetch more to ensure we find our user
-        
-        println("Top Users: $topUsers")
+        // Wait up to 2 seconds for the async listener to update Redis
+        await().atMost(2, TimeUnit.SECONDS).untilAsserted {
+            val topUsers = leaderboardService.getGlobalLeaderboard(20)
+            val myUserEntry = topUsers.find { it.userId == userId.toString() }
+            
+            if (myUserEntry == null) {
+                // This exception triggers a retry in Awaitility
+                throw AssertionError("User $userId not found yet in leaderboard. Current: $topUsers")
+            }
 
-        val myUserEntry = topUsers.find { it.userId == userId.toString() }
-        
-        if (myUserEntry == null) {
-            throw AssertionError("User $userId not found in leaderboard. Top users: $topUsers")
+            assertEquals(500.0, myUserEntry.score, 0.01)
         }
-
-        assertEquals(500.0, myUserEntry.score, 0.01)
     }
 }

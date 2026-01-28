@@ -18,6 +18,7 @@ bin/
 !**/src/test/**/bin/
 GEMINI.md
 SESSION_LOG.md
+ASYNC.md
 
 ### IntelliJ IDEA ###
 .idea

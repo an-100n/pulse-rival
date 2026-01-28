@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "GEMINI.md",
+                "file": "ASYNC.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "GEMINI"
+              "title": "ASYNC"
             }
           }
         ]
@@ -183,22 +183,22 @@
       "bases:Create new base": false
     }
   },
-  "active": "6046de79ae932696",
+  "active": "bd217d49d5a17aeb",
   "lastOpenFiles": [
-    "src/main/kotlin/com/pulserival/gamification/controller/LeaderboardController.kt",
-    "src/main/kotlin/com/pulserival/gamification/controller",
-    "src/main/kotlin/com/pulserival/gamification/service/LeaderboardService.kt~",
-    "src/main/kotlin/com/pulserival/gamification/service/LeaderboardService.kt",
-    "src/main/kotlin/com/pulserival/gamification/service",
-    "src/main/kotlin/com/pulserival/gamification/dto/LeaderboardEntry.kt",
-    "src/main/kotlin/com/pulserival/gamification/dto",
-    "src/main/kotlin/com/pulserival/gamification/configuration/RedisConfig.kt~",
-    "src/main/kotlin/com/pulserival/gamification/configuration/RedisConfig.kt",
-    "src/main/kotlin/com/pulserival/gamification/configuration",
-    "src/main/kotlin/com/pulserival/gamification",
-    "HELP.md",
-    "README.md",
     "SESSION_LOG.md",
-    "GEMINI.md"
+    "ASYNC.md",
+    "build/kotlin/compileTestKotlin/cacheable/dirty-sources.txt",
+    "build/classes/kotlin/test/META-INF/api_test.kotlin_module",
+    "build/classes/kotlin/test/com/pulserival/gamification/EventWiringTest$Companion.class",
+    "build/classes/kotlin/test/com/pulserival/gamification/EventWiringTest$RedisContainer.class",
+    "build/classes/kotlin/test/com/pulserival/gamification/EventWiringTest.class",
+    "build/kotlin/compileKotlin/cacheable/dirty-sources.txt",
+    "build/classes/kotlin/main/META-INF/api.kotlin_module",
+    "build/classes/kotlin/main/com/pulserival/gamification/listener/LeaderboardEventListener.class",
+    "build/classes/kotlin/main/com/pulserival/PulseRivalApplicationKt.class",
+    "build/classes/kotlin/main/com/pulserival/PulseRivalApplication.class",
+    "GEMINI.md",
+    "HELP.md",
+    "README.md"
   ]
 }

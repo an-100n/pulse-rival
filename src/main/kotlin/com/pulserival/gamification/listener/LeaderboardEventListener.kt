@@ -5,6 +5,7 @@ import com.pulserival.gamification.service.LeaderboardService
 import org.springframework.stereotype.Component
 import org.springframework.transaction.event.TransactionPhase
 import org.springframework.transaction.event.TransactionalEventListener
+import org.springframework.scheduling.annotation.Async
 
 @Component
 class LeaderboardEventListener(
@@ -14,10 +15,12 @@ class LeaderboardEventListener(
     /**
      * Listens for ActivityLoggedEvent and updates the leaderboard.
      * 
+     * @Async: Runs this in a separate thread pool so the API responds instantly.
      * @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT):
      * Ensures we ONLY update Redis if the data was successfully saved to Postgres.
      * Prevents "Ghost Points" (updating Redis then rolling back the DB).
      */
+    @Async
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     fun handleActivityLogged(event: ActivityLoggedEvent) {
         // In the future, we might have complex XP logic here.
