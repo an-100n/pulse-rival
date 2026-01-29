@@ -41,6 +41,7 @@ class SecurityConfig(
                     .requestMatchers(HttpMethod.POST, "/api/v1/users").permitAll()
                     .requestMatchers("/api/v1/auth/**").permitAll()
                     .requestMatchers(HttpMethod.GET, "/api/v1/leaderboards/global").permitAll()
+                    .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                     .anyRequest().authenticated()
             }
             .userDetailsService(userDetailsService)

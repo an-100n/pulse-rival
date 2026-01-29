@@ -8,6 +8,8 @@ import com.pulserival.common.exception.UserNotFoundException
 import com.pulserival.activity.entity.ActivityLog
 import com.pulserival.activity.repository.ActivityLogRepository
 import com.pulserival.identity.repository.UserRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -21,7 +23,7 @@ class ActivityLogService(
 ) {
 
     @Transactional
-    fun logActivity(command: LogActivityCommand): ActivityLogResponse {
+    suspend fun logActivity(command: LogActivityCommand): ActivityLogResponse {
         // Business Rule: We don't accept negative values for health activities
         if (command.value < 0) {
             throw InvalidActivityValueException("Activity value cannot be negative: ${command.value}")
@@ -39,7 +41,10 @@ class ActivityLogService(
             rawData = command.rawData
         )
 
-        val saved = activityLogRepository.save(log)
+        // Switch to IO thread ONLY for the blocking DB call
+        val saved = withContext(Dispatchers.IO) {
+            activityLogRepository.save(log)
+        }
 
         // Publish Event: "Hey, an activity happened!"
         // Downstream listeners (Gamification, Analytics, etc.) will handle the rest.
@@ -60,8 +65,8 @@ class ActivityLogService(
         )
     }
 
-    fun getUserActivities(userId: UUID): List<ActivityLogResponse> {
-        return activityLogRepository.findAllByUserId(userId).map {
+    suspend fun getUserActivities(userId: UUID): List<ActivityLogResponse> = withContext(Dispatchers.IO) {
+        activityLogRepository.findAllByUserId(userId).map {
             ActivityLogResponse(it.id, it.type, it.value, it.occurredAt, it.rawData)
         }
     }

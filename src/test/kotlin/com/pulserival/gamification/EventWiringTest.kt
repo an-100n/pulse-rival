@@ -6,14 +6,12 @@ import com.pulserival.activity.entity.ActivityType
 import com.pulserival.activity.repository.ActivityLogRepository
 import com.pulserival.activity.service.ActivityLogService
 import com.pulserival.gamification.service.LeaderboardService
+import com.pulserival.identity.entity.User
 import com.pulserival.identity.repository.UserRepository
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.`when`
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.bean.override.mockito.MockitoBean
 import org.springframework.test.context.DynamicPropertyRegistry
 import org.springframework.test.context.DynamicPropertySource
 import org.testcontainers.containers.GenericContainer
@@ -23,6 +21,8 @@ import org.testcontainers.utility.DockerImageName
 import java.util.UUID
 import org.awaitility.Awaitility.await
 import java.util.concurrent.TimeUnit
+import kotlinx.coroutines.runBlocking
+import java.time.Instant
 
 @SpringBootTest
 @Testcontainers
@@ -49,35 +49,31 @@ class EventWiringTest {
     @Autowired
     private lateinit var leaderboardService: LeaderboardService
 
-    @MockitoBean
+    @Autowired
     private lateinit var activityLogRepository: ActivityLogRepository
 
-    @MockitoBean
+    @Autowired
     private lateinit var userRepository: UserRepository
 
     @Test
-    fun `when activity is logged, leaderboard should be updated via event`() {
+    fun `when activity is logged, leaderboard should be updated via event`() = runBlocking {
         // Given
-        val userId = UUID.randomUUID()
+        val uniqueId = UUID.randomUUID().toString()
+        val user = User(
+            dbUsername = "user_$uniqueId",
+            email = "test_$uniqueId@event.com",
+            dbPassword = "password"
+        )
+        val savedUser = userRepository.save(user)
+        val userId = savedUser.id
+
         val command = LogActivityCommand(
             userId = userId,
             type = ActivityType.STEPS,
-            value = 500
+            value = 500,
+            occurredAt = Instant.now(),
+            rawData = mapOf("device" to "fitbit")
         )
-        
-        // Mock SQL interactions
-        `when`(userRepository.existsById(userId)).thenReturn(true)
-        `when`(activityLogRepository.save(any(ActivityLog::class.java))).thenAnswer { invocation ->
-            val log = invocation.getArgument(0) as ActivityLog
-            // Simulate DB saving by returning the object with an ID
-            ActivityLog(
-                userId = log.userId,
-                type = log.type,
-                value = log.value,
-                occurredAt = log.occurredAt,
-                rawData = log.rawData
-            ) // In a real mock we might set ID, but not strictly needed here
-        }
 
         // When
         activityLogService.logActivity(command)

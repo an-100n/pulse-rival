@@ -15,12 +15,12 @@ class ActivityController(
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun logActivity(@RequestBody command: LogActivityCommand): ActivityLogResponse {
+    suspend fun logActivity(@RequestBody command: LogActivityCommand): ActivityLogResponse {
         return activityLogService.logActivity(command)
     }
 
     @GetMapping("/user/{userId}")
-    fun getActivities(@PathVariable userId: UUID): List<ActivityLogResponse> {
+    suspend fun getActivities(@PathVariable userId: UUID): List<ActivityLogResponse> {
         return activityLogService.getUserActivities(userId)
     }
 }
