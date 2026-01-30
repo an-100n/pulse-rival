@@ -23,13 +23,15 @@ class ActivityLogService(
 ) {
 
     @Transactional
-    suspend fun logActivity(command: LogActivityCommand): ActivityLogResponse {
+    fun logActivity(command: LogActivityCommand): ActivityLogResponse {
         // Business Rule: We don't accept negative values for health activities
         if (command.value < 0) {
             throw InvalidActivityValueException("Activity value cannot be negative: ${command.value}")
         }
 
-        if (!userRepository.existsById(command.userId)) {
+        val userExists = userRepository.existsById(command.userId)
+
+        if (!userExists) {
             throw UserNotFoundException(command.userId.toString())
         }
 
@@ -41,10 +43,7 @@ class ActivityLogService(
             rawData = command.rawData
         )
 
-        // Switch to IO thread ONLY for the blocking DB call
-        val saved = withContext(Dispatchers.IO) {
-            activityLogRepository.save(log)
-        }
+        val saved = activityLogRepository.save(log)
 
         // Publish Event: "Hey, an activity happened!"
         // Downstream listeners (Gamification, Analytics, etc.) will handle the rest.

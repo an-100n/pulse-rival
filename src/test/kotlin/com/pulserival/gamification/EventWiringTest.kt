@@ -15,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.DynamicPropertyRegistry
 import org.springframework.test.context.DynamicPropertySource
 import org.testcontainers.containers.GenericContainer
+import org.testcontainers.containers.PostgreSQLContainer
 import org.testcontainers.junit.jupiter.Container
 import org.testcontainers.junit.jupiter.Testcontainers
 import org.testcontainers.utility.DockerImageName
@@ -35,11 +36,20 @@ class EventWiringTest {
         @Container
         val redis: RedisContainer = RedisContainer("redis:7.2-alpine").withExposedPorts(6379)
 
+        @Container
+        val postgres = PostgreSQLContainer<Nothing>("postgres:15-alpine")
+
         @JvmStatic
         @DynamicPropertySource
-        fun redisProperties(registry: DynamicPropertyRegistry) {
+        fun properties(registry: DynamicPropertyRegistry) {
+            // Redis
             registry.add("spring.data.redis.host") { redis.host }
             registry.add("spring.data.redis.port") { redis.getMappedPort(6379) }
+
+            // Postgres
+            registry.add("spring.datasource.url", postgres::getJdbcUrl)
+            registry.add("spring.datasource.username", postgres::getUsername)
+            registry.add("spring.datasource.password", postgres::getPassword)
         }
     }
 
@@ -81,15 +91,11 @@ class EventWiringTest {
         // Then
         // Wait up to 2 seconds for the async listener to update Redis
         await().atMost(2, TimeUnit.SECONDS).untilAsserted {
-            val topUsers = leaderboardService.getGlobalLeaderboard(20)
-            val myUserEntry = topUsers.find { it.userId == userId.toString() }
+            // We check the score directly for this user, ignoring where they stand in the global rank
+            // (because DataSeeder might have populated the board with high scores)
+            val score = leaderboardService.getUserScore(userId.toString())
             
-            if (myUserEntry == null) {
-                // This exception triggers a retry in Awaitility
-                throw AssertionError("User $userId not found yet in leaderboard. Current: $topUsers")
-            }
-
-            assertEquals(500.0, myUserEntry.score, 0.01)
+            assertEquals(500.0, score, 0.01)
         }
     }
 }

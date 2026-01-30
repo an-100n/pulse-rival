@@ -65,4 +65,12 @@ class LeaderboardService(
             )
         }
     }
+
+    /**
+     * Gets the score of a specific user.
+     * Returns 0.0 if the user is not in the leaderboard.
+     */
+    fun getUserScore(userId: String): Double {
+        return redisTemplate.opsForZSet().score(leaderboardKey, userId) ?: 0.0
+    }
 }
