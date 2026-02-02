@@ -15,11 +15,13 @@ class ActivityController(
     private val activityLogService: ActivityLogService
 ) {
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    suspend fun logActivity(@RequestBody command: LogActivityCommand): ActivityLogResponse = withContext(Dispatchers.IO) {
-        activityLogService.logActivity(command)
-    }
+        @PostMapping
+        @ResponseStatus(HttpStatus.CREATED)
+        fun logActivity(@RequestBody command: LogActivityCommand): ActivityLogResponse {
+
+            return activityLogService.logActivity(command)
+
+        }
 
     @GetMapping("/user/{userId}")
     suspend fun getActivities(@PathVariable userId: UUID): List<ActivityLogResponse> {

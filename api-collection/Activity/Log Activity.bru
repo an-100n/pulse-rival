@@ -11,7 +11,7 @@ post {
 }
 
 auth:bearer {
-  token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJicnVub191c2VyIiwiaWF0IjoxNzY5NDM3MjgwLCJleHAiOjE3Njk1MjM2ODB9.M-rpZ5Z5Lq0JyjgYQ4lGuCyu1dOneMaNkrjnDEdyTlQ
+  token: {{authToken}}
 }
 
 body:json {
@@ -27,5 +27,5 @@ body:json {
 
 vars:pre-request {
   baseUrl: http://localhost:8080/api/v1
-  userId: cc0b05ac-d3b6-4d7d-b903-a842e77317db
+  userId: c9cd8516-7904-43e3-a7cd-10730a538821
 }

@@ -30,22 +30,29 @@ class JwtAuthenticationFilter(
         }
 
         val jwt = authHeader.substring(7)
-        // In a real app, handle generic exceptions here to avoid 500s on malformed tokens
-        val username = jwtService.extractUsername(jwt)
+        
+        try {
+            // In a real app, handle generic exceptions here to avoid 500s on malformed tokens
+            val username = jwtService.extractUsername(jwt)
 
-        if (SecurityContextHolder.getContext().authentication == null) {
-            val userDetails = userDetailsService.loadUserByUsername(username)
+            if (username != null && SecurityContextHolder.getContext().authentication == null) {
+                val userDetails = userDetailsService.loadUserByUsername(username)
 
-            if (jwtService.isTokenValid(jwt, userDetails)) {
-                val authToken = UsernamePasswordAuthenticationToken(
-                    userDetails,
-                    null,
-                    userDetails.authorities
-                )
-                authToken.details = WebAuthenticationDetailsSource().buildDetails(request)
-                SecurityContextHolder.getContext().authentication = authToken
+                if (jwtService.isTokenValid(jwt, userDetails)) {
+                    val authToken = UsernamePasswordAuthenticationToken(
+                        userDetails,
+                        null,
+                        userDetails.authorities
+                    )
+                    authToken.details = WebAuthenticationDetailsSource().buildDetails(request)
+                    SecurityContextHolder.getContext().authentication = authToken
+                }
             }
+        } catch (e: Exception) {
+            // Log the error so we know WHY auth failed, but don't crash the request.
+            println("JWT Authentication Failed: ${e.message}")
         }
+        
         filterChain.doFilter(request, response)
     }
 }

@@ -12,8 +12,8 @@ post {
 
 body:json {
   {
-    "username": "bruno_user",
-    "password": "password123"
+    "username": "user_1",
+    "password": "password"
   }
 }
 
@@ -22,8 +22,11 @@ vars:pre-request {
 }
 
 script:post-response {
-  if (res.status === 200) {
-    bru.setEnvVar("token", res.body.token);
-    console.log("Auth Token saved");
+  const token = res.body.token;
+  
+  if (token) {
+    // Use bru.setEnvVar to explicitly target the active environment
+    bru.setEnvVar("authToken", token); 
+    console.log("Token synced to environment: " + token.substring(0, 10) + "...");
   }
 }
