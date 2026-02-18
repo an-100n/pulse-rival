@@ -4,6 +4,7 @@ import com.pulserival.activity.entity.ActivityLog
 import com.pulserival.activity.entity.ActivityType
 import com.pulserival.activity.repository.ActivityLogRepository
 import com.pulserival.gamification.service.LeaderboardService
+import com.pulserival.identity.entity.Sex
 import com.pulserival.identity.entity.User
 import com.pulserival.identity.repository.UserRepository
 import org.springframework.boot.CommandLineRunner
@@ -12,6 +13,7 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Profile
 import org.springframework.security.crypto.password.PasswordEncoder
 import java.time.Instant
+import java.time.LocalDate
 import java.time.temporal.ChronoUnit
 import java.util.UUID
 import kotlin.random.Random
@@ -40,11 +42,23 @@ class DataSeeder(
 
             // 1. Create 10 Users
             for (i in 1..10) {
+                val sex = if (Random.nextBoolean()) Sex.MALE else Sex.FEMALE
+                // Height: Integer (e.g. 175.0)
+                val heightCm = Random.nextInt(160, 190).toDouble()
+                // Weight: 1 decimal place (e.g. 72.5)
+                val rawWeight = Random.nextDouble(60.0, 100.0)
+                val weightKg = Math.round(rawWeight * 10.0) / 10.0
+                val birthDate = LocalDate.now().minusYears(Random.nextLong(18, 50))
+
                 val user = User(
                     dbUsername = "user_$i",
                     email = "user_$i@example.com",
                     dbPassword = commonPassword,
-                    timezone = "UTC"
+                    timezone = "UTC",
+                    sex = sex,
+                    heightCm = heightCm,
+                    weightKg = weightKg,
+                    birthDate = birthDate
                 )
                 users.add(user)
             }

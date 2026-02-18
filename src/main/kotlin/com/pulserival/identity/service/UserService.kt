@@ -4,16 +4,17 @@ import com.pulserival.common.exception.EmailAlreadyInUseException
 import com.pulserival.common.exception.UsernameAlreadyTakenException
 import com.pulserival.common.exception.UserNotFoundException
 import com.pulserival.identity.dto.RegisterUserCommand
+import com.pulserival.identity.dto.UpdateUserProfileCommand
 import com.pulserival.identity.dto.UserResponse
+import com.pulserival.identity.entity.User
 import com.pulserival.identity.repository.UserRepository
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.UUID
 
-
 @Service
-class UserRegistrationService(
+class UserService(
     private val userRepository: UserRepository,
     private val passwordEncoder: PasswordEncoder
 ) {
@@ -30,7 +31,7 @@ class UserRegistrationService(
         val rawPassword = command.password
         val encodedPassword: String = passwordEncoder.encode(rawPassword)!!
 
-        val newUser = com.pulserival.identity.entity.User(
+        val newUser = User(
             dbUsername = command.username,
             email = command.email,
             dbPassword = encodedPassword,
@@ -39,12 +40,7 @@ class UserRegistrationService(
 
         val savedUser = userRepository.save(newUser)
 
-        return UserResponse(
-            id = savedUser.id.toString(),
-            username = savedUser.dbUsername,
-            email = savedUser.email,
-            timezone = savedUser.timezone
-        )
+        return mapToResponse(savedUser)
     }
 
     @Transactional(readOnly = true)
@@ -52,11 +48,35 @@ class UserRegistrationService(
         val user = userRepository.findById(id)
             .orElseThrow { UserNotFoundException(id.toString()) }
         
+        return mapToResponse(user)
+    }
+
+    @Transactional
+    fun updateProfile(userId: UUID, command: UpdateUserProfileCommand): UserResponse {
+        val user = userRepository.findById(userId)
+            .orElseThrow { UserNotFoundException(userId.toString()) }
+
+        command.sex?.let { user.sex = it }
+        command.heightCm?.let { user.heightCm = it }
+        command.weightKg?.let { user.weightKg = it }
+        command.birthDate?.let { user.birthDate = it }
+        command.timezone?.let { user.timezone = it }
+
+        val savedUser = userRepository.save(user)
+        return mapToResponse(savedUser)
+    }
+
+    private fun mapToResponse(user: User): UserResponse {
         return UserResponse(
             id = user.id.toString(),
             username = user.dbUsername,
             email = user.email,
-            timezone = user.timezone
+            timezone = user.timezone,
+            sex = user.sex,
+            heightCm = user.heightCm,
+            weightKg = user.weightKg,
+            birthDate = user.birthDate,
+            age = user.getAge()
         )
     }
 }

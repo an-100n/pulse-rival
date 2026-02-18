@@ -7,6 +7,8 @@ import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 import java.time.Instant
+import java.time.LocalDate
+import java.time.Period
 import java.util.UUID
 
 @Entity
@@ -22,7 +24,20 @@ class User(
     val dbPassword: String,
 
     @Column(nullable = false)
-    val timezone: String = "UTC",
+    var timezone: String = "UTC",
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "sex", nullable = true)
+    var sex: Sex? = null,
+
+    @Column(name = "height_cm", nullable = true)
+    var heightCm: Double? = null,
+
+    @Column(name = "weight_kg", nullable = true)
+    var weightKg: Double? = null,
+
+    @Column(name = "birth_date", nullable = true)
+    var birthDate: LocalDate? = null,
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -36,6 +51,10 @@ class User(
     @Id
     @Column(name = "id", updatable = false, nullable = false)
     val id: UUID = UUID.randomUUID()
+
+    fun getAge(): Int? {
+        return birthDate?.let { Period.between(it, LocalDate.now()).years }
+    }
 
     override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
         return mutableListOf(SimpleGrantedAuthority("ROLE_USER"))

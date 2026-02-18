@@ -3,14 +3,10 @@ package com.pulserival.identity.dto
 import com.pulserival.identity.entity.Sex
 import java.time.LocalDate
 
-data class UserResponse(
-    val id: String,
-    val username: String,
-    val email: String,
-    val timezone: String,
+data class UpdateUserProfileCommand(
     val sex: Sex? = null,
     val heightCm: Double? = null,
     val weightKg: Double? = null,
     val birthDate: LocalDate? = null,
-    val age: Int? = null
+    val timezone: String? = null
 )
