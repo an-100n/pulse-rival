@@ -1,13 +1,13 @@
 # Implementation Plan: Velocity Vault Core Engine
 
 ## Phase 1: Foundation - Challenge & Participation Models
-- [ ] Task: Define the Domain Models for `Challenge` and `Participation`.
-    - [ ] Create `Challenge` entity with status, goal, and vault totals.
-    - [ ] Create `Participation` entity to link Users to Challenges with status and timestamps.
-    - [ ] Set up JPA Repositories for both.
-- [ ] Task: Implement `ChallengeService` for basic lifecycle management.
-    - [ ] Write tests for challenge creation and user registration.
-    - [ ] Implement `createChallenge` and `joinChallenge`.
+- [x] Task: Define the Domain Models for `Challenge` and `Participation`.
+    - [x] Create `Challenge` entity with status, goal, and vault totals.
+    - [x] Create `Participation` entity to link Users to Challenges with status and timestamps.
+    - [x] Set up JPA Repositories for both.
+- [x] Task: Implement `ChallengeService` for basic lifecycle management.
+    - [x] Write tests for challenge creation and user registration.
+    - [x] Implement `createChallenge` and `joinChallenge`.
 - [ ] Task: Conductor - User Manual Verification 'Foundation' (Protocol in workflow.md)
 
 ## Phase 2: The Weighting Engine
